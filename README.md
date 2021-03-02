@@ -128,7 +128,7 @@ Another note: atoms don't currently garbage collect. Let's call that a TODO shal
 
 A few little tidbits I think are worth pointing out.
 
-#### Use with switch expressions
+#### Use with switch expressions ([sample](https://github.com/Grumpy-Raven/yew/blob/main/samples/Examples.cs#L36))
 ```csharp
   View SampleChoice(Choice choice) => choice switch
   {
@@ -139,7 +139,7 @@ A few little tidbits I think are worth pointing out.
   }
 ```
 
-#### Render data item collections with Select and Method Components
+#### Render data item collections with Select and Method Components ([sample](https://github.com/Grumpy-Raven/yew/blob/main/samples/TodoApp.cs#L43))
 ```csharp
 return new StackLayout()
 {
@@ -148,7 +148,7 @@ return new StackLayout()
      .Select(item => TodoItemView(state.Update, item))
 ```
 
-#### HTML / React style attributes
+#### HTML / React style attributes ([sample](https://github.com/Grumpy-Raven/yew/blob/main/samples/Examples.cs#L21))
 We do these in constructors, rather than object initializers, so as not to conflict with list initialization. Fortunately, named optional parameters make this very pleasant to do:
 ```
 return new StackLayout(className: "root", style: "UI/styles.uss")            
