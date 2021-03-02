@@ -17,7 +17,7 @@ Yew is available as a Unity package. [link]
 Are you looking for an example project to get started?
  * [Counter](https://github.com/Grumpy-Raven/yew/blob/main/samples/CounterApp.cs)
  * [Todo](https://github.com/Grumpy-Raven/yew/blob/main/samples/TodoApp.cs)
- * [Samples Browser](https://github.com/Grumpy-Raven/yew/blob/main/samples/Examples.cs
+ * [Samples Browser](https://github.com/Grumpy-Raven/yew/blob/main/samples/Examples.cs)
 
 ## License
 
