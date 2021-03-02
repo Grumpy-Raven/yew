@@ -52,7 +52,7 @@ Shall we talk a bit about what's going on here?
 
 ### We have a CounterApp View, and a CounterApp.Component.
 
-Yew maintains a hierarchy of disposable view elements. I borrowed heavily from React's design [here](https://reactjs.org/blog/2015/12/18/react-components-elements-and-instances.html) (Note: What Yew calls "views", React calls "elements") It turns out, these things are pretty dang useful for reconciliation. Yew maintains a tree of Yew Nodes which each node is responsible for an associated VisualElement, a Yew View, and an instance of a Yew Component. Nodes also maintain a list of child nodes, and Yew uses an implementation of Longest Common Subsequence (yeah - all that dynamic programming interview study actually paid off - this is the first time I've ever had a reason to use a tabulation based dynamic programming algorithm in something that isn't just an interview problem) to reconcile children, adding, updating and inserting nodes as needed. (Note: this is different than what React does, or did at least, per this [doc on react reconiliation](https://reactjs.org/docs/reconciliation.html). I couldn't find a great discussion of how modern react reconciles, if anyone has insight here, I'd love to hear it. Yew's LCS reconciler is O(m*n^2) where m is the number of nodes and n is the average number of children per node, whereas react claims to have a linear time reconciler, which I'm definitely curious about.)
+Yew maintains a hierarchy of disposable view elements. I borrowed heavily from React's design [here](https://reactjs.org/blog/2015/12/18/react-components-elements-and-instances.html) (Note: What Yew calls "views", React calls "elements") It turns out, these things are pretty dang useful for reconciliation. Yew maintains a tree of Yew Nodes where each node is responsible for: an associated VisualElement, a Yew View, and an instance of a Yew Component. Nodes also maintain a list of child nodes, and Yew uses an implementation of Longest Common Subsequence (yeah - all that dynamic programming interview study actually paid off - this is the first time I've ever had a reason to use a tabulation based dynamic programming algorithm in something that isn't just an interview problem) to reconcile children, adding, updating and inserting nodes as needed. (Note: this is different than what React does, or did at least, per this [doc on react reconiliation](https://reactjs.org/docs/reconciliation.html). I couldn't find a great discussion of how modern react reconciles, if anyone has insight here, I'd love to hear it. Yew's LCS reconciler is O(m*n^2) where m is the number of nodes and n is the average number of children per node, whereas react claims to have a linear time reconciler, which I'm definitely curious about.)
 
 Unless the View derives from YewLib.Primitive (used for directly emitting VisualElements), it will probably contain a child Component type. This is where you actually implement UI logic, work with state, render a subtree, and so on. I played around with a number of different patterns here, and for me, it's all about ease of readability and speed of expressing my ideas through code. So, while I'm not normally a big fan of convention over configuration, being able to just know that there is a nested Component type makes the code really easy to write, and you don't have to come up with two names for everything - (naming things once is bad enough!)
 
@@ -95,7 +95,30 @@ I did stumble across [recoiljs](https://recoiljs.org), and the "atom" pattern wa
 var state = UseAtom(TodoAppKey, () => new TodoState());
 ```
 
-What this does is creates a global bit of state, which lives independently of the component. So, if this component gets cleaned up, you don't lose the state. Nice! If you want to dig in a little more into Yew atoms, have a look at the [Todo App](https://github.com/Grumpy-Raven/yew/blob/main/samples/TodoApp.cs#L40) (and you can see how to 'subscribe' to the atom value in the [hello world sample](https://github.com/Grumpy-Raven/yew/blob/main/samples/HelloWorld.cs#L28)). 
+What this does is creates a global bit of state, which lives independently of the component. So, if this component gets cleaned up, you don't lose the state. Nice! If you want to dig in a little more into Yew atoms, have a look at the [Todo App](https://github.com/Grumpy-Raven/yew/blob/main/samples/TodoApp.cs#L40) (and you can see how to 'subscribe' to the atom value in the [hello world sample](https://github.com/Grumpy-Raven/yew/blob/main/samples/HelloWorld.cs#L28)).
+
+Atoms can be referenced outside of Yew component trees. This could be useful for things like animations, or integration with other parts of your game (or whatever it is you do with Unity) (I haven't tried this yet, fwiw):
+
+```csharp
+public class Foo : MonoBehavior
+{
+  void Update() {
+    var atom = Yew.UseAtom<float>("pos", 0);
+    atom.Value += Time.deltaTime;
+  }
+}
+
+public class FooView : View
+{
+  public class Component : YewLib.Component {
+    public override View Render() {
+      // this is speculative at this point. I'll give it a shot and see if it works okay soon.
+      var (xPos, yPos) = UseAtomValue("pos").Select(v => (Mathf.Cos(v), Math.Sin(v)));
+      return new Image(translateX: xPos, translateY: yPos, src: 'yewtree.png');
+    }
+  }
+}
+```
 
 Note also, you can use lambdas for more complex state constructors.
 Another note: atoms don't currently garbage collect. Let's call that a TODO shall we?
@@ -138,7 +161,7 @@ Yew is available as a Unity package. [link]
 
 ## Examples
 
-Are you looking for an example project to get started?
+These shouldn't be too hard to get running... Let me know if you get stuck.
  * [Counter](https://github.com/Grumpy-Raven/yew/blob/main/samples/CounterApp.cs)
  * [Todo](https://github.com/Grumpy-Raven/yew/blob/main/samples/TodoApp.cs)
  * [Samples Browser](https://github.com/Grumpy-Raven/yew/blob/main/samples/Examples.cs)
