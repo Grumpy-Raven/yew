@@ -48,6 +48,10 @@ var uiDoc = GetComponent<UIDocument>();
 Yew.Render(new Examples(), uiDoc.rootVisualElement);
 ```
 
+<img src="https://user-images.githubusercontent.com/309808/109729783-44bfbc00-7b6d-11eb-8ed3-ea2de6bac434.gif" width="300"/>
+
+That's it!
+
 Shall we talk a bit about what's going on here?
 
 ### We have a CounterApp View, and a CounterApp.Component.
@@ -165,6 +169,7 @@ Yew is available as a Unity package. [link]
 These shouldn't be too hard to get running... Let me know if you get stuck.
  * [Counter](https://github.com/Grumpy-Raven/yew/blob/main/samples/CounterApp.cs)
  * [Todo](https://github.com/Grumpy-Raven/yew/blob/main/samples/TodoApp.cs)
+<img src="https://user-images.githubusercontent.com/309808/109730169-e9da9480-7b6d-11eb-962b-47f89042b147.gif" width="300"/>
  * [Samples Browser](https://github.com/Grumpy-Raven/yew/blob/main/samples/Examples.cs)
 
 ## To Dos
