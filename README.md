@@ -170,6 +170,7 @@ These shouldn't be too hard to get running... Let me know if you get stuck.
  * [Counter](https://github.com/Grumpy-Raven/yew/blob/main/samples/CounterApp.cs)
  * [Todo](https://github.com/Grumpy-Raven/yew/blob/main/samples/TodoApp.cs)
 <img src="https://user-images.githubusercontent.com/309808/109730169-e9da9480-7b6d-11eb-962b-47f89042b147.gif" width="300"/>
+ 
  * [Samples Browser](https://github.com/Grumpy-Raven/yew/blob/main/samples/Examples.cs)
 
 ## To Dos
@@ -177,7 +178,7 @@ These shouldn't be too hard to get running... Let me know if you get stuck.
  * [ ] Flesh out the primitives more. (images, sliders, select boxes, scrollers ..., and expose more attributes, such as OnClick for Labels, OnEnter for textboxes, ...)
  * [ ] Performance / make sure stuff gets freed up when things unmount
  * [ ] Maybe support animations
- * [ ] Maybe support 
+ * [ ] What would you do? If you were yew?
 
 ## License
 
