@@ -17,9 +17,9 @@ Coming from a world where creating a functional component is as easy as:
 var OneTwoThree({ num }) => <div>{num}</div>
 ```
 
-I wanted to have the best of both worlds - the flexibility and familiarity of designing layouts using classes and CSS-like rules, and the speed of iteration using component driven architectures. So, Yew.
+I wanted to have the flexibility and familiarity of designing layouts using classes and CSS-like rules, and the speed of iteration using component driven architectures. So, Yew.
 
-## But what does it look like?
+## What does it look like?
 
 Let's start with a simple example, ye old counter:
 
@@ -77,7 +77,7 @@ View ItemRenderer(int i)
     };
 }
 
-View override View Render() => new StackLayout {
+public override View Render() => new StackLayout {
   ItemRenderer(1),
   ItemRenderer(2),
 }
@@ -99,6 +99,38 @@ What this does is creates a global bit of state, which lives independently of th
 
 Note also, you can use lambdas for more complex state constructors.
 Another note: atoms don't currently garbage collect. Let's call that a TODO shall we?
+
+### Anything Else?
+
+A few little tidbits I think are worth pointing out.
+
+#### Use with switch expressions
+```csharp
+  View SampleChoice(Choice choice) => choice switch
+  {
+      Choice.Counter => new CounterApp(),
+      Choice.Todo => new TodoApp(),
+      Choice.HelloWorld => new HelloWorld(),
+      _ => new Label("Choose a sample to learn more about yew")
+  }
+```
+
+#### Render data item collections with Select and Method Components
+```csharp
+return new StackLayout()
+{
+   state.Value.TodoItems
+     .Where(x => !x.Completed)
+     .Select(item => TodoItemView(state.Update, item))
+```
+
+#### HTML / React style attributes
+We do these in constructors, rather than object initializers, so as not to conflict with list initialization. Fortunately, named optional parameters make this very pleasant to do:
+```
+return new StackLayout(className: "root", style: "UI/styles.uss")            
+```
+
+Oh yeah, that's how we get styles associated. Which is useful. I don't fully know my way around UI Toolkit yet, but I think Yew should inherit pretty much all of the functioanlity of UI Toolkit, well, except for UI Builder. But, you can edit your stylesheets and see those changes get reflected in real time, and you can use the nifty UI Toolkit Debugger tool. Editing the C# does not give a good hot reload experience, at least I haven't figured that one out very well yet.
 
 ## Installation
 
