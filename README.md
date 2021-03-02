@@ -9,7 +9,7 @@ Yew is a library to help make it easier to write interactive UI for Unity. Get i
 It's inspired by things like [React](https://reactjs.org/), [Elm](https://guide.elm-lang.org/architecture/), [Recoil](https://recoiljs.org/), and [.NET MAUI](https://devblogs.microsoft.com/dotnet/introducing-net-multi-platform-app-ui/#mvu).
 
 ## Rationale
-There's a lot to like with the upcoming support for UI Toolkit in the Unity runtime. Coming from a web developer background, the similarity between HTML/CSS & UXML/USS is just wonderful. But, I've been using libraries like React for so long that I actually don't really love handediting UXML and digging around with selector queries to find nodes in my C# code, and the steps it seems to take to get custom components created and usable in the UI Builder tool just feel too heavy. 
+There's a lot to like with the upcoming support for UI Toolkit in the Unity runtime. Coming from a web development background, the similarity between HTML/CSS & UXML/USS is just wonderful. But, I've been using libraries like React for so long that I actually don't really love handediting UXML and digging around with selector queries to find nodes in my C# code, and the steps it seems to take to get custom components created and usable in the UI Builder tool just feel too heavy. 
 
 Coming from a world where creating a functional component is as easy as:
 
