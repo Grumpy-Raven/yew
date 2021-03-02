@@ -112,13 +112,14 @@ public class FooView : View
 {
   public class Component : YewLib.Component {
     public override View Render() {
-      // this is speculative at this point. I'll give it a shot and see if it works okay soon.
       var (xPos, yPos) = UseAtomValue("pos").Select(v => (Mathf.Cos(v), Math.Sin(v)));
       return new Image(translateX: xPos, translateY: yPos, src: 'yewtree.png');
     }
   }
 }
 ```
+
+If you want to get updates when an atom changes, implement `YewLib.IUpdatable` (just a `void Update()` method) and `Subscribe()` to the atom. (yeah, super simple and naive observer stuff, sorry not sorry).
 
 Note also, you can use lambdas for more complex state constructors.
 Another note: atoms don't currently garbage collect. Let's call that a TODO shall we?
@@ -165,6 +166,13 @@ These shouldn't be too hard to get running... Let me know if you get stuck.
  * [Counter](https://github.com/Grumpy-Raven/yew/blob/main/samples/CounterApp.cs)
  * [Todo](https://github.com/Grumpy-Raven/yew/blob/main/samples/TodoApp.cs)
  * [Samples Browser](https://github.com/Grumpy-Raven/yew/blob/main/samples/Examples.cs)
+
+## To Dos
+
+ * [ ] Flesh out the primitives more. (images, sliders, select boxes, scrollers ..., and expose more attributes, such as OnClick for Labels, OnEnter for textboxes, ...)
+ * [ ] Performance / make sure stuff gets freed up when things unmount
+ * [ ] Maybe support animations
+ * [ ] Maybe support 
 
 ## License
 
