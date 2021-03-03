@@ -77,7 +77,7 @@ View ItemRenderer(int i)
     return new StackLayout()
     {
         Label($"Counter #{i}: {state.Value}"),
-        Button("click me random", () => state.Value++),
+        Button($"Incr #{i}", () => state.Value++),
     };
 }
 
