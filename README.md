@@ -14,7 +14,7 @@ There's a lot to like with the upcoming support for UI Toolkit in the Unity runt
 Coming from a world where creating a functional component is as easy as:
 
 ```javascript
-var OneTwoThree({ num }) => <div>{num}</div>
+var OneTwoThree = ({ num }) => <div>{num}</div>
 ```
 
 I wanted to have the flexibility and familiarity of designing layouts using classes and CSS-like rules, and the speed of iteration using component driven architectures. So, Yew.
