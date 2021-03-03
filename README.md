@@ -14,7 +14,7 @@ There's a lot to like with the upcoming support for UI Toolkit in the Unity runt
 Coming from a world where creating a functional component is as easy as:
 
 ```javascript
-var OneTwoThree({ num }) => <div>{num}</div>
+var OneTwoThree = ({ num }) => <div>{num}</div>
 ```
 
 I wanted to have the flexibility and familiarity of designing layouts using classes and CSS-like rules, and the speed of iteration using component driven architectures. So, Yew.
@@ -33,7 +33,7 @@ public class CounterApp : View
             var state = UseState(0);
             return new Flex()
             {
-                Label(state.Value.ToString()),
+                Label($"{state.Value}"),
                 Button("Increment", () => state.Value++)
             };
         }
@@ -45,7 +45,7 @@ And to plant it into a UI Document, from a MonoBehavior:
 
 ```csharp
 var uiDoc = GetComponent<UIDocument>();
-Yew.Render(new Examples(), uiDoc.rootVisualElement);
+Yew.Render(new CounterApp(), uiDoc.rootVisualElement);
 ```
 
 <img src="https://user-images.githubusercontent.com/309808/109729783-44bfbc00-7b6d-11eb-8ed3-ea2de6bac434.gif" width="300"/>
@@ -77,7 +77,7 @@ View ItemRenderer(int i)
     return new StackLayout()
     {
         Label($"Counter #{i}: {state.Value}"),
-        Button("click me random", () => state.Value++),
+        Button($"Incr #{i}", () => state.Value++),
     };
 }
 
@@ -162,7 +162,7 @@ Oh yeah, that's how we get styles associated. Which is useful. I don't fully kno
 
 ## Installation
 
-Yew is available as a Unity package. [link]
+Yew is available as a Unity package. [link](https://github.com/Grumpy-Raven/yew/releases/tag/v0.1)
 
 ## Examples
 
