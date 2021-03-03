@@ -33,7 +33,7 @@ public class CounterApp : View
             var state = UseState(0);
             return new Flex()
             {
-                Label(state.Value.ToString()),
+                Label($"{state.Value}"),
                 Button("Increment", () => state.Value++)
             };
         }
