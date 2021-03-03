@@ -45,7 +45,7 @@ And to plant it into a UI Document, from a MonoBehavior:
 
 ```csharp
 var uiDoc = GetComponent<UIDocument>();
-Yew.Render(new Examples(), uiDoc.rootVisualElement);
+Yew.Render(new CounterApp(), uiDoc.rootVisualElement);
 ```
 
 <img src="https://user-images.githubusercontent.com/309808/109729783-44bfbc00-7b6d-11eb-8ed3-ea2de6bac434.gif" width="300"/>
