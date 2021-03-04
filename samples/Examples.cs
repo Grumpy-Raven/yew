@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace YewLib
 {
@@ -22,7 +22,11 @@ namespace YewLib
                 var state = UseState(Choice.None);
                 return new StackLayout(className: "root", style: "UI/styles")
                 {
-                    Label("Yew Samples", "h1"),
+                    new Flex(alignItems: Align.FlexEnd)
+                    {
+                        new Image("Textures/yew-logo-small", width: 100, height: 100),
+                        Label("Yew Samples", "h1")
+                    },
                     new Flex(className: "sample-menu")
                     {
                         Enum.GetValues(typeof(Choice)).Cast<Choice>().Select((Choice c) => new Checkbox(state.Value == c,
