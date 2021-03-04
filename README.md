@@ -103,6 +103,11 @@ What this does is creates a global bit of state, which lives independently of th
 
 Atoms can be referenced outside of Yew component trees. This could be useful for things like animations, or integration with other parts of your game (or whatever it is you do with Unity)
 
+If you want to get updates when an atom changes, implement `YewLib.IUpdatable` (just a `void Update()` method) and `Subscribe()` to the atom. (yeah, super simple and naive observer stuff, sorry not sorry).
+
+Note also, you can use lambdas for more complex state constructors.
+Another note: atoms don't currently garbage collect. Let's call that a TODO shall we?
+
 ### Yew Runtime and Animations
 
 Speaking of animations, Yew now has a [Runtime MonoBehavior](https://github.com/Grumpy-Raven/yew/blob/main/src/Runtime.cs), which if installed, allows components to request animation frames. This is what it looks like:
@@ -131,11 +136,6 @@ public override View Render()
     return Label(text, className: "typewriter");
 }
 ```
-
-If you want to get updates when an atom changes, implement `YewLib.IUpdatable` (just a `void Update()` method) and `Subscribe()` to the atom. (yeah, super simple and naive observer stuff, sorry not sorry).
-
-Note also, you can use lambdas for more complex state constructors.
-Another note: atoms don't currently garbage collect. Let's call that a TODO shall we?
 
 ### Anything Else?
 
