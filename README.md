@@ -109,7 +109,7 @@ Speaking of animations, Yew now has a [Runtime MonoBehavior](https://github.com/
 
 <img src="https://user-images.githubusercontent.com/309808/109889655-a732be00-7c3a-11eb-9362-55c56f4a836d.gif" width="500" />
 
-Here are the salient bits of TypeWriter sample:
+Here are the salient bits of the [TypeWriter sample](https://github.com/Grumpy-Raven/yew/blob/main/samples/TypeWriter.cs):
 
 ```csharp
 void Raf(State<int> len)
