@@ -20,7 +20,7 @@ namespace YewLib
             public override View Render()
             {
                 var state = UseState(Choice.None);
-                return new StackLayout(className: "root", style: "UI/styles.uss")
+                return new StackLayout(className: "root", style: "UI/styles")
                 {
                     Label("Yew Samples", "h1"),
                     new Flex(className: "sample-menu")

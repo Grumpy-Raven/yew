@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace YewLib
@@ -44,7 +45,7 @@ namespace YewLib
         {
             if (string.IsNullOrEmpty(StyleSrc)) return;
             ve.styleSheets.Clear();
-            var stylesheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(Path.Combine("Assets", StyleSrc));
+            var stylesheet = Resources.Load<StyleSheet>(StyleSrc);
             ve.styleSheets.Add(stylesheet);
         }
 

@@ -27,7 +27,7 @@ namespace YewLib
 
         public override VisualElement ToVisualElement()
         {
-            var button = new UnityEngine.UIElements.Button(OnClick);
+            var button = new UnityEngine.UIElements.Button();
             if (!string.IsNullOrEmpty(ClassName))
                 button.AddToClassList(ClassName);
             button.style.opacity = Opacity;
