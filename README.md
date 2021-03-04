@@ -105,7 +105,7 @@ Atoms can be referenced outside of Yew component trees. This could be useful for
 
 ### Yew Runtime and Animations
 
-Speaking of animations, Yew now has a [Runtime MonoBehavior](https://github.com/Grumpy-Raven/yew/blob/main/src/Runtime.cs), which if installed, allows components to request animation frames. You cans see it in action on this youtube link: https://youtu.be/LWv2uaU4smw 
+Speaking of animations, Yew now has a [Runtime MonoBehavior](https://github.com/Grumpy-Raven/yew/blob/main/src/Runtime.cs), which if installed, allows components to request animation frames. This is what it looks like: <img src="https://user-images.githubusercontent.com/309808/109889655-a732be00-7c3a-11eb-9362-55c56f4a836d.gif" width="500" />
 
 Here is the salient bits of TypeWriter sample:
 
