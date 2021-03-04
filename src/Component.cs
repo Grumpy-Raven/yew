@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace YewLib
 {
@@ -105,7 +107,10 @@ namespace YewLib
 
         public void Update()
         {
-            Node.Update();
+            if (Runtime.HasInstance)
+                Runtime.Instance.QueueForUpdate(Node);
+            else
+                Node.Update();
         }
         
         public static Button Button(string label, Action onClick, string className = null)
@@ -120,15 +125,39 @@ namespace YewLib
 
         public void RequestAnimationFrame(Action raf)
         {
+            if (Runtime.Instance == null)
+            {
+                Debug.Log("You must install the Yew Runtime before you can use animations.");
+                return;
+            }
             Runtime.Instance.RequestAnimationFrame(raf);
         }
 
         public void UseRaf(Func<bool> raf)
         {
+            if (Runtime.Instance == null)
+            {
+                Debug.Log("You must install the Yew Runtime before you can use animations.");
+                return;
+            }
             Runtime.Instance.RequestAnimationFrame(() =>
             {
                 if (raf()) UseRaf(raf);
             });
+        }
+
+        private HashSet<IEnumerator> coroutines = new HashSet<IEnumerator>();
+        public void UseCoroutine(Func<IEnumerator> coroutine)
+        {
+            if (Runtime.Instance == null)
+            {
+                Debug.Log("You must install the Yew Runtime before you can use animations.");
+                return;
+            }
+            var c = UseState(coroutine);
+            if (coroutines.Contains(c.Value)) return;
+            coroutines.Add(c.Value);
+            Runtime.Instance.StartCoroutine(c.Value);
         }
     }
 }

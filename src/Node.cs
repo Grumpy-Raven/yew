@@ -39,6 +39,8 @@ namespace YewLib
 
         public void Update(View view = null)
         {
+            if (Runtime.HasInstance && Runtime.Instance.HasBeenUpdatedThisFrame(this))
+                return;
             Depth = (Parent?.Depth ?? 0) + 1;
             view ??= View;
             if (view == null) return;
@@ -74,6 +76,8 @@ namespace YewLib
                 };
             }
             MaybeReconcileChildren(view);
+            if(Runtime.HasInstance)
+                Runtime.Instance.HasBeenUpdatedThisFrame(this);
         }
 
         private void MaybeReconcileChildren(View view)

@@ -1,4 +1,4 @@
-﻿using Cinemachine;
+﻿using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace YewLib
@@ -7,15 +7,18 @@ namespace YewLib
     public class Label : Primitive
     {
         public string Text { get; set; }
-        public Label(string text, string className = null)
+        public Color? Color { get; set; }
+        public Label(string text, string className = null, Color? color = null)
         {
-            this.Text = text;
-            this.ClassName = className;
+            Text = text;
+            ClassName = className;
+            Color = color;
         }
 
         public override bool NeedsUpdate(View newView)
         {
-            return Text != (newView as Label).Text;
+            var newLabel = newView as Label;
+            return Text != newLabel.Text || Color != newLabel.Color;
         }
 
         public Label(string text)
@@ -29,6 +32,10 @@ namespace YewLib
             label.text = Text;
             if (!string.IsNullOrEmpty(ClassName))
                 label.AddToClassList(ClassName);
+            if (Color.HasValue)
+            {
+                label.style.color = new StyleColor(Color.Value);
+            }
             return label;
         }
 
@@ -36,6 +43,10 @@ namespace YewLib
         {
             var label = ve as UnityEngine.UIElements.Label;
             label.text = Text;
+            if (Color.HasValue)
+            {
+                label.style.color = new StyleColor(Color.Value);
+            }
         }
     }
 }

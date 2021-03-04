@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -24,7 +25,8 @@ namespace YewLib
             // TODO: if we're going to reflect, we'll want to cache.
             // DOUBLE TODO: this code is like.... really hacky.
             var type = GetType();
-            var componentType = type.GetNestedType("Component");
+            var componentType = type.GetNestedType("Component", 
+                BindingFlags.Default | BindingFlags.NonPublic | BindingFlags.Public);
             Component instance;
             try
             {

@@ -30,5 +30,7 @@ namespace YewLib
         }
 
         public HashSet<IUpdatable> Subscribers { get; set; } = new HashSet<IUpdatable>();
+
+        public static implicit operator T(State<T> obj) => obj.Value;
     }
 }

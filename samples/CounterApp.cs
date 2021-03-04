@@ -1,4 +1,6 @@
-﻿namespace YewLib
+﻿using UnityEngine.UIElements;
+
+namespace YewLib
 {
     public class CounterApp : View
     {
@@ -7,9 +9,9 @@
             public override View Render()
             {
                 var state = UseState(0);
-                return new Flex()
+                return new Flex(alignItems: Align.Center)
                 {
-                    Label(state.Value.ToString()),
+                    Label($"{state.Value}"),
                     Button("Increment", () => state.Value++)
                 };
             }

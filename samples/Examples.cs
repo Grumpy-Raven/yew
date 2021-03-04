@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 namespace YewLib
@@ -10,6 +11,7 @@ namespace YewLib
             None,
             Counter,
             HelloWorld,
+            TypeWriter,
             Todo
         }
         
@@ -23,21 +25,15 @@ namespace YewLib
                     Label("Yew Samples", "h1"),
                     new Flex(className: "sample-menu")
                     {
-                        new Checkbox(state.Value == Choice.Counter,
-                            v => state.Value = Choice.Counter,
-                            "Counter"),
-                        new Checkbox(state.Value == Choice.Todo,
-                            v => state.Value = Choice.Todo,
-                            "Todo"),
-                        new Checkbox(state.Value == Choice.HelloWorld,
-                            v => state.Value = Choice.HelloWorld,
-                            "Sandbox App"),
+                        Enum.GetValues(typeof(Choice)).Cast<Choice>().Select((Choice c) => new Checkbox(state.Value == c,
+                            v => state.Value = c, c.ToString()))
                     },
                     state.Value switch
                     {
                         Choice.Counter => new CounterApp(),
                         Choice.Todo => new TodoApp(),
                         Choice.HelloWorld => new HelloWorld(),
+                        Choice.TypeWriter => new TypeWriter() { Text = "You step into a dark room. Inside, you see a body."},
                         _ => new Label("Choose a sample to learn more about yew")
                     }
                 };

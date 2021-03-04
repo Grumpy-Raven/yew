@@ -1,6 +1,6 @@
 ﻿using System;
-using UnityEditor.UIElements;
 using UnityEngine.UIElements;
+using YewLib.Util;
 
 namespace YewLib
 {
@@ -9,11 +9,20 @@ namespace YewLib
         public string Label { get; set; }
         public Action OnClick { get; set; }
         
-        public Button(string label, Action onClick, string className = null)
+        public float Opacity { get; set; }
+        
+        public Button(string label, Action onClick, string className = null, float opacity = 1)
         {
             Label = label;
             OnClick = onClick;
             ClassName = className;
+            Opacity = opacity;
+        }
+
+        public override bool NeedsUpdate(View newView)
+        {
+            var otherButton = newView as Button;
+            return Label != otherButton.Label || Opacity != otherButton.Opacity;
         }
 
         public override VisualElement ToVisualElement()
@@ -21,7 +30,9 @@ namespace YewLib
             var button = new UnityEngine.UIElements.Button(OnClick);
             if (!string.IsNullOrEmpty(ClassName))
                 button.AddToClassList(ClassName);
+            button.style.opacity = Opacity;
             button.text = Label;
+            EventHelper.Bind(button, OnClick);
             return button;
         }
 
@@ -29,8 +40,9 @@ namespace YewLib
         {
             var button = ve as UnityEngine.UIElements.Button;
             button.text = Label;
-            // TODO: how to unregister prior callback?
-            button.clicked += OnClick;
+            button.style.opacity = Opacity;
+            EventHelper.Unbind(button);
+            EventHelper.Bind(button, OnClick);
         }
     }
 }

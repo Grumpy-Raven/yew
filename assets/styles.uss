@@ -1,5 +1,5 @@
 ﻿:root {
-  -unity-font-definition: url("/Assets/UI Toolkit/Resources/Fonts & Materials/Comfortaa SDF.asset");
+  /* -unity-font-definition: url("/Assets/UI Toolkit/Resources/Fonts & Materials/Comfortaa SDF.asset"); */
   background-color: white;
 }
 
@@ -83,4 +83,11 @@
 
 .sample-menu {
     margin: 20px 0;
+}
+
+.typewriter {
+    height: 200px;
+    width: 300px;
+    font-size: 40px;
+    white-space: normal;
 }

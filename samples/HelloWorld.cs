@@ -26,7 +26,7 @@ namespace YewLib
             {
                 var state = UseState(0);
                 var todoItems = UseAtomValue<TodoState>(TodoApp.TodoAppKey)?.TodoItems
-                    .Where(i => i.Completed);
+                    .Where(i => i is {Completed: true});
                 return new StackLayout()
                 {
                     Label("Random Num: " + state.Value),

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,10 +7,11 @@ namespace YewLib
 {
     public class Runtime : MonoBehaviour
     {
+        public static bool HasInstance { get; private set; }
         public static Runtime Instance { get; set; }
         // Start is called before the first frame update
         public float msPerFrame = 16;
-
+        
         List<Action> rafs = new List<Action>();
         public void RequestAnimationFrame(Action raf)
         {
@@ -21,6 +21,7 @@ namespace YewLib
         void Start()
         {
             Instance = this;
+            HasInstance = true;
         }
 
         private float timer = 0;
@@ -39,6 +40,29 @@ namespace YewLib
                     raf();
                 }
             }
+
+            if (nodeUpdates.Any())
+            {
+                var localNodeUpdates = nodeUpdates.ToArray();
+                nodeUpdates.Clear();
+                updatedNodes.Clear();
+                foreach(var node in localNodeUpdates)
+                    node.Update();
+            }
         }
+
+        private HashSet<Node> nodeUpdates = new HashSet<Node>();
+        private HashSet<Node> updatedNodes = new HashSet<Node>();
+        public void QueueForUpdate(Node node)
+        {
+            nodeUpdates.Add(node);
+        }
+
+        public void MarkUpdated(Node node)
+        {
+            updatedNodes.Add(node);
+        }
+
+        public bool HasBeenUpdatedThisFrame(Node node) => updatedNodes.Contains(node);
     }
 }

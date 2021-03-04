@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using FluffyUnderware.DevTools.Extensions;
+using UnityEngine;
 
 namespace YewLib
 {
@@ -14,17 +17,41 @@ namespace YewLib
             public override View Render()
             {
                 var len = UseState(0);
-                UseRaf(() =>
+                var buttonOpacity = UseState(0f);
+                var color = UseState(Color.green);
+                Action changeColor = () =>
                 {
-                    if (len >= Props.Text.Length) return false;
-                    if (Random.value > 0.3) return true;
-                    len.Value++;
-                    return false; // no need to call another raf because render will do it for us.
-                });
+                    color.Value = Color.Lerp(Color.red, Color.green, Mathf.PingPong(Time.time, 1));
+                };
+                IEnumerator anim()
+                {
+                    while (len < Props.Text.Length) {
+                        len.Value++;
+                        changeColor();
+                        yield return new WaitForSeconds(0.1f);
+                    }
+                    while (buttonOpacity < 1) {
+                        buttonOpacity.Value += 0.03f;
+                        changeColor();
+                        yield return new WaitForSeconds(0.025f);
+                    }
+
+                    while (true)
+                    {
+                        changeColor();
+                        yield return new WaitForSeconds(0.1f);
+                    }
+                }
+                UseCoroutine(anim);
                 string text = Props.Text;
+                string colorPrefix = $"<color={color.Value.ToHtml()}>";
                 if (len < text.Length)
                     text = $"{text.Substring(0, len)}<alpha=#00>{text.Substring(len)}";
-                return Label(text, className: "typewriter");
+                return new StackLayout()
+                {
+                    Label(colorPrefix + text, className: "typewriter"),
+                    new Button("Examine body", () => { }, opacity: buttonOpacity)
+                };
             }
         }
     }
