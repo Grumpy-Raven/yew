@@ -11,19 +11,16 @@ namespace YewLib
             private TypeWriter Props { get; set; }
             public Component(TypeWriter props) => Props = props;
 
-            void Raf(State<int> len)
-            {
-                if (len >= Props.Text.Length) return;
-                if (Random.value < 0.3)
-                    len.Value++;
-                else
-                    RequestAnimationFrame(() => Raf(len));
-            }
-            
             public override View Render()
             {
                 var len = UseState(0);
-                RequestAnimationFrame(() => Raf(len));
+                UseRaf(() =>
+                {
+                    if (len >= Props.Text.Length) return false;
+                    if (Random.value > 0.3) return true;
+                    len.Value++;
+                    return false; // no need to call another raf because render will do it for us.
+                });
                 string text = Props.Text;
                 if (len < text.Length)
                     text = $"{text.Substring(0, len)}<alpha=#00>{text.Substring(len)}";

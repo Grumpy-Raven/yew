@@ -117,5 +117,18 @@ namespace YewLib
         {
             return new Label(label, className);
         }
+
+        public void RequestAnimationFrame(Action raf)
+        {
+            Runtime.Instance.RequestAnimationFrame(raf);
+        }
+
+        public void UseRaf(Func<bool> raf)
+        {
+            Runtime.Instance.RequestAnimationFrame(() =>
+            {
+                if (raf()) UseRaf(raf);
+            });
+        }
     }
 }
