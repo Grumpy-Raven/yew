@@ -101,25 +101,32 @@ var state = UseAtom(TodoAppKey, () => new TodoState());
 
 What this does is creates a global bit of state, which lives independently of the component. So, if this component gets cleaned up, you don't lose the state. Nice! If you want to dig in a little more into Yew atoms, have a look at the [Todo App](https://github.com/Grumpy-Raven/yew/blob/main/samples/TodoApp.cs#L40) (and you can see how to 'subscribe' to the atom value in the [hello world sample](https://github.com/Grumpy-Raven/yew/blob/main/samples/HelloWorld.cs#L28)).
 
-Atoms can be referenced outside of Yew component trees. This could be useful for things like animations, or integration with other parts of your game (or whatever it is you do with Unity) (I haven't tried this yet, fwiw):
+Atoms can be referenced outside of Yew component trees. This could be useful for things like animations, or integration with other parts of your game (or whatever it is you do with Unity)
+
+### Yew Runtime and Animations
+
+Speaking of animations, Yew now has a [Runtime MonoBehavior](https://github.com/Grumpy-Raven/yew/blob/main/src/Runtime.cs), which if installed, allows components to request animation frames. You cans see it in action on this youtube link: https://youtu.be/LWv2uaU4smw 
+
+Here is the salient bits of TypeWriter sample:
 
 ```csharp
-public class Foo : MonoBehavior
+void Raf(State<int> len)
 {
-  void Update() {
-    var atom = Yew.UseAtom<float>("pos", 0);
-    atom.Value += Time.deltaTime;
-  }
+    if (len >= Props.Text.Length) return;
+    if (Random.value < 0.3)
+        len.Value++;
+    else
+        RequestAnimationFrame(() => Raf(len));
 }
 
-public class FooView : View
+public override View Render()
 {
-  public class Component : YewLib.Component {
-    public override View Render() {
-      var (xPos, yPos) = UseAtomValue("pos").Select(v => (Mathf.Cos(v), Math.Sin(v)));
-      return new Image(translateX: xPos, translateY: yPos, src: 'yewtree.png');
-    }
-  }
+    var len = UseState(0);
+    RequestAnimationFrame(() => Raf(len));
+    string text = Props.Text;
+    if (len < text.Length)
+        text = $"{text.Substring(0, len)}<alpha=#00>{text.Substring(len)}";
+    return Label(text, className: "typewriter");
 }
 ```
 
