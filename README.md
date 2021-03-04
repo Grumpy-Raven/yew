@@ -101,32 +101,41 @@ var state = UseAtom(TodoAppKey, () => new TodoState());
 
 What this does is creates a global bit of state, which lives independently of the component. So, if this component gets cleaned up, you don't lose the state. Nice! If you want to dig in a little more into Yew atoms, have a look at the [Todo App](https://github.com/Grumpy-Raven/yew/blob/main/samples/TodoApp.cs#L40) (and you can see how to 'subscribe' to the atom value in the [hello world sample](https://github.com/Grumpy-Raven/yew/blob/main/samples/HelloWorld.cs#L28)).
 
-Atoms can be referenced outside of Yew component trees. This could be useful for things like animations, or integration with other parts of your game (or whatever it is you do with Unity) (I haven't tried this yet, fwiw):
-
-```csharp
-public class Foo : MonoBehavior
-{
-  void Update() {
-    var atom = Yew.UseAtom<float>("pos", 0);
-    atom.Value += Time.deltaTime;
-  }
-}
-
-public class FooView : View
-{
-  public class Component : YewLib.Component {
-    public override View Render() {
-      var (xPos, yPos) = UseAtomValue("pos").Select(v => (Mathf.Cos(v), Math.Sin(v)));
-      return new Image(translateX: xPos, translateY: yPos, src: 'yewtree.png');
-    }
-  }
-}
-```
+Atoms can be referenced outside of Yew component trees. This could be useful for things like animations, or integration with other parts of your game (or whatever it is you do with Unity)
 
 If you want to get updates when an atom changes, implement `YewLib.IUpdatable` (just a `void Update()` method) and `Subscribe()` to the atom. (yeah, super simple and naive observer stuff, sorry not sorry).
 
 Note also, you can use lambdas for more complex state constructors.
 Another note: atoms don't currently garbage collect. Let's call that a TODO shall we?
+
+### Yew Runtime and Animations
+
+Speaking of animations, Yew now has a [Runtime MonoBehavior](https://github.com/Grumpy-Raven/yew/blob/main/src/Runtime.cs), which if installed, allows components to request animation frames. This is what it looks like:
+
+<img src="https://user-images.githubusercontent.com/309808/109889655-a732be00-7c3a-11eb-9362-55c56f4a836d.gif" width="500" />
+
+Here are the salient bits of the [TypeWriter sample](https://github.com/Grumpy-Raven/yew/blob/main/samples/TypeWriter.cs):
+
+```csharp
+void Raf(State<int> len)
+{
+    if (len >= Props.Text.Length) return;
+    if (Random.value < 0.3)
+        len.Value++;
+    else
+        RequestAnimationFrame(() => Raf(len));
+}
+
+public override View Render()
+{
+    var len = UseState(0);
+    RequestAnimationFrame(() => Raf(len));
+    string text = Props.Text;
+    if (len < text.Length)
+        text = $"{text.Substring(0, len)}<alpha=#00>{text.Substring(len)}";
+    return Label(text, className: "typewriter");
+}
+```
 
 ### Anything Else?
 
