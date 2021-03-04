@@ -135,7 +135,7 @@ public override View Render()
     UseCoroutine(anim);
     string text = Props.Text;
     if (len < text.Length)
-        text = $"{text.Substring(0, len)}<alpha=#44>{text.Substring(len)}";
+        text = $"{text.Substring(0, len)}<alpha=#00>{text.Substring(len)}";
     return new StackLayout()
     {
         Label(text, className: "typewriter"),
