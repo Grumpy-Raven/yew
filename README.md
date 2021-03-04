@@ -114,22 +114,19 @@ Speaking of animations, Yew now has a [Runtime MonoBehavior](https://github.com/
 
 <img src="https://user-images.githubusercontent.com/309808/109889655-a732be00-7c3a-11eb-9362-55c56f4a836d.gif" width="500" />
 
-Here are the salient bits of the [TypeWriter sample](https://github.com/Grumpy-Raven/yew/blob/main/samples/TypeWriter.cs):
+Here is the salient bit of the [TypeWriter sample](https://github.com/Grumpy-Raven/yew/blob/main/samples/TypeWriter.cs):
 
 ```csharp
-void Raf(State<int> len)
-{
-    if (len >= Props.Text.Length) return;
-    if (Random.value < 0.3)
-        len.Value++;
-    else
-        RequestAnimationFrame(() => Raf(len));
-}
-
 public override View Render()
 {
     var len = UseState(0);
-    RequestAnimationFrame(() => Raf(len));
+    UseRaf(() =>
+    {
+        if (len >= Props.Text.Length) return false;
+        if (Random.value > 0.3) return true;
+        len.Value++;
+        return false; // no need to call another raf because render will do it for us.
+    });
     string text = Props.Text;
     if (len < text.Length)
         text = $"{text.Substring(0, len)}<alpha=#00>{text.Substring(len)}";
