@@ -38,6 +38,7 @@ namespace YewLib
         
         public void Add(IEnumerable<View> e)
         {
+            if (e == null) return;
             Children.AddRange(e.Where(x => x != null));
         }
 
