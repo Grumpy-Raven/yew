@@ -169,7 +169,7 @@ Oh yeah, that's how we get styles associated. Which is useful. I don't fully kno
 
 ## Installation
 
-Yew is available as a Unity package. [link](https://github.com/Grumpy-Raven/yew/releases/tag/v0.1)
+Yew is available as a Unity package. [link](https://github.com/Grumpy-Raven/yew/releases)
 
 ## Examples
 
