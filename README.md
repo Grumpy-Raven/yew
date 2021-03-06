@@ -120,27 +120,18 @@ Here is the salient bit of the [TypeWriter sample](https://github.com/Grumpy-Rav
 public override View Render()
 {
     var len = UseState(0);
-    var buttonOpacity = UseState(0f);
     IEnumerator anim()
     {
         while (len < Props.Text.Length) {
             len.Value++;
             yield return new WaitForSeconds(0.1f);
         }
-        while (buttonOpacity < 1) {
-            buttonOpacity.Value += 0.03f;
-            yield return new WaitForSeconds(0.025f);
-        }
     }
     UseCoroutine(anim);
     string text = Props.Text;
     if (len < text.Length)
         text = $"{text.Substring(0, len)}<alpha=#00>{text.Substring(len)}";
-    return new StackLayout()
-    {
-        Label(text, className: "typewriter"),
-        new Button("Examine body", () => { }, opacity: buttonOpacity)
-    };
+    return Label(text, className: "typewriter");
 }
 ```
 
