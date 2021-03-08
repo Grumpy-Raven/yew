@@ -40,9 +40,12 @@ namespace YewLib
                 var state = UseAtom(TodoAppKey, () => new TodoState());
                 return new StackLayout()
                 {
-                    state.Value.TodoItems
-                        .Where(x => !x.Completed)
-                        .Select(item => TodoItemView(state.Update, item)),
+                    new ScrollView
+                    {
+                        state.Value.TodoItems
+                            .Where(x => !x.Completed)
+                            .Select(item => TodoItemView(state.Update, item)),
+                    },
                     new Flex(className: "new-todo") {
                         new TextField(
                             label: "What do you need to do?",
@@ -61,7 +64,7 @@ namespace YewLib
                             state.Update();
                         })
                     },
-                    state.Value.TodoItems.Any(x => x.Completed) ? new StackLayout(className: "completed")
+                    state.Value.TodoItems.Any(x => x.Completed) ? new ScrollView(className: "completed")
                     {
                         Label("Completed Items:"),
                         state.Value.TodoItems

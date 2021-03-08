@@ -20,9 +20,7 @@ namespace YewLib
                 var buttonOpacity = UseState(0f);
                 var color = UseState(Color.green);
                 Action changeColor = () =>
-                {
                     color.Value = Color.Lerp(Color.red, Color.green, Mathf.PingPong(Time.time, 1));
-                };
                 IEnumerator anim()
                 {
                     while (len < Props.Text.Length) {

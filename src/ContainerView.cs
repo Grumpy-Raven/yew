@@ -10,6 +10,16 @@ namespace YewLib
 {
     public abstract class ContainerView : Primitive, IEnumerable<View>
     {
+        public ContainerView()
+        {
+            
+        }
+
+        public ContainerView(string className) : base(className)
+        {
+            
+        }
+        
         public List<View> Children { get; } = new List<View>();
         
         public string StyleSrc { get; set; }

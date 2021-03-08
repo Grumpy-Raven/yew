@@ -5,6 +5,14 @@ namespace YewLib
 {
     public class Primitive : View
     {
+        public Primitive()
+        {
+        }
+
+        public Primitive(string className) : base(className)
+        {
+        }
+
         public virtual VisualElement ToVisualElement()
         {
             return null;
