@@ -23,6 +23,12 @@ namespace YewLib
         }
 
         private static Dictionary<string, IState> atoms = new Dictionary<string, IState>();
+
+        public static State<T> UseAtom<T>(string key, T initialValue)
+        {
+            return UseAtom<T>(key, () => initialValue);
+        }
+        
         public static State<T> UseAtom<T>(string key, Func<T> initialValue)
         {
             if (!atoms.ContainsKey(key))

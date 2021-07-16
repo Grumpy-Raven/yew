@@ -44,6 +44,11 @@ namespace YewLib
             Debug.LogError("error creating component from view");
             return null;
         }
+        
+        public static implicit operator View(string from)
+        {
+            return new Label(from);
+        }
 
         public virtual bool NeedsUpdate(View newView) => false;
 
