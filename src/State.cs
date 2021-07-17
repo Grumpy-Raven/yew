@@ -4,7 +4,7 @@ namespace YewLib
 {
     public interface IState
     {
-        
+        HashSet<IUpdatable> Subscribers { get; set; }
     }
     
     public class State<T> : IState
