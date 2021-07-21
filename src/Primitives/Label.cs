@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UIElements;
+using YewLib.Util;
 
 namespace YewLib
 {
@@ -8,11 +10,13 @@ namespace YewLib
     {
         public string Text { get; set; }
         public Color? Color { get; set; }
-        public Label(string text, string className = null, Color? color = null)
+        public Action OnClick { get; set; }
+        public Label(string text, string className = null, Color? color = null, Action onClick = null)
         {
             Text = text;
             ClassName = className;
             Color = color;
+            OnClick = onClick;
         }
 
         public override bool NeedsUpdate(View newView)
@@ -32,6 +36,8 @@ namespace YewLib
             label.text = Text;
             if (!string.IsNullOrEmpty(ClassName))
                 label.AddToClassList(ClassName);
+            if (OnClick != null)
+                EventHelper<MouseUpEvent>.Bind(label, e => OnClick());
             if (Color.HasValue)
             {
                 label.style.color = new StyleColor(Color.Value);
@@ -47,6 +53,9 @@ namespace YewLib
             {
                 label.style.color = new StyleColor(Color.Value);
             }
+            EventHelper<MouseUpEvent>.Unbind(label);
+            if (OnClick != null)
+                EventHelper<MouseUpEvent>.Bind(label, e => OnClick());
         }
     }
 }
