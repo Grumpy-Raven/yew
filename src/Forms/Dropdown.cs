@@ -49,7 +49,9 @@ namespace YewLib.Forms
                         {
                             var l = new Label(v, view.DropdownEntryClassName);
                             if (view.SelectedValues.Contains(v))
-                                l.ClassName += " " + view.DropdownSelectedClassName;
+                            {
+                                l.AddClassName(view.DropdownSelectedClassName);
+                            }
                             l.OnClick = () =>
                             {
                                 if (!view.Multiselect)

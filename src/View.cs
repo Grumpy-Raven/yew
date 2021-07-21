@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace YewLib
 {
@@ -9,7 +11,7 @@ namespace YewLib
     {
         public View(string className)
         {
-            ClassName = className;
+            AddClassName(className);
         }
 
         public View()
@@ -18,7 +20,35 @@ namespace YewLib
         
         
         public string Key { get; set; }
-        public string ClassName { get; set; }
+        public HashSet<string> ClassNames { get; set; } = new(); 
+
+        public void AddClassName(string className)
+        {
+            ClassNames.Add(className);
+        }
+
+        public void RemoveClassName(string className)
+        {
+            ClassNames.Remove(className);
+        }
+
+        public void ToggleClassName(string className)
+        {
+            if (ClassNames.Contains(className))
+            {
+                ClassNames.Remove(className);
+            }
+            else
+            {
+                ClassNames.Add(className);
+            }
+        }
+
+        public void SetClassNamesOnVisualElement(VisualElement ve)
+        {
+            foreach(var className in ClassNames)
+                ve.AddToClassList(className);
+        }
 
         public virtual Component ToComponent(Node node)
         {

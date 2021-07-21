@@ -9,7 +9,7 @@ namespace YewLib
         {
         }
 
-        public Primitive(string className) : base(className)
+        public Primitive(string classNames) : base(classNames)
         {
         }
 

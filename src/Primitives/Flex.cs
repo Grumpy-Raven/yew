@@ -18,7 +18,7 @@ namespace YewLib
             FlexDirection = flexDirection;
             Key = key;
             StyleSrc = style;
-            ClassName = className;
+            AddClassName(className);
             AlignItems = alignItems;
         }
         
@@ -27,8 +27,7 @@ namespace YewLib
             var ve = new VisualElement();
             ve.style.flexDirection = FlexDirection;
             ve.style.alignItems = AlignItems;
-            if (ClassName != null)
-                ve.AddToClassList(ClassName);
+            SetClassNamesOnVisualElement(ve);
             return ve;
         }
     }

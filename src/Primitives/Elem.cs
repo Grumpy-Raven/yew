@@ -7,15 +7,14 @@ namespace YewLib
         public Elem(string key = null, string className = null, string style = null)
         {
             Key = key;
-            ClassName = className;
+            AddClassName(className);
             StyleSrc = style;
         }
         
         public override VisualElement ToVisualElement()
         {
             var ve = new VisualElement();
-            if (ClassName != null)
-                ve.AddToClassList(ClassName);
+            SetClassNamesOnVisualElement(ve);
             return ve;
         }
     }

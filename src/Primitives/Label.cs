@@ -14,7 +14,7 @@ namespace YewLib
         public Label(string text, string className = null, Color? color = null, Action onClick = null)
         {
             Text = text;
-            ClassName = className;
+            AddClassName(className);
             Color = color;
             OnClick = onClick;
         }
@@ -34,8 +34,7 @@ namespace YewLib
         {
             var label = new UnityEngine.UIElements.Label();
             label.text = Text;
-            if (!string.IsNullOrEmpty(ClassName))
-                label.AddToClassList(ClassName);
+            SetClassNamesOnVisualElement(label);
             if (OnClick != null)
                 EventHelper<MouseUpEvent>.Bind(label, e => OnClick());
             if (Color.HasValue)

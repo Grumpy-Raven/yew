@@ -64,7 +64,7 @@ namespace YewLib
                             state.Update();
                         })
                     },
-                    state.Value.TodoItems.Any(x => x.Completed) ? new ScrollView(className: "completed")
+                    state.Value.TodoItems.Any(x => x.Completed) ? new ScrollView(classNames: "completed")
                     {
                         Label("Completed Items:"),
                         state.Value.TodoItems

@@ -17,7 +17,7 @@ namespace YewLib
             Label = label;
             Value = value;
             OnChanged = onChanged;
-            ClassName = className;
+            AddClassName(className);
             LabelAlign = labelAlign;
         }
 
@@ -30,8 +30,7 @@ namespace YewLib
         public override VisualElement ToVisualElement()
         {
             var textField = new UnityEngine.UIElements.TextField(Label);
-            if (!string.IsNullOrEmpty(ClassName))
-                textField.AddToClassList(ClassName);
+            SetClassNamesOnVisualElement(textField);
             textField.value = Value;
             textField.labelElement.style.alignSelf = LabelAlign;
             EventHelper<ChangeEvent<string>>.Bind(textField, Updated);

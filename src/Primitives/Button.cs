@@ -15,8 +15,8 @@ namespace YewLib
         {
             Label = label;
             OnClick = onClick;
-            ClassName = className;
             Opacity = opacity;
+            AddClassName(className);
         }
 
         public override bool NeedsUpdate(View newView)
@@ -28,8 +28,7 @@ namespace YewLib
         public override VisualElement ToVisualElement()
         {
             var button = new UnityEngine.UIElements.Button();
-            if (!string.IsNullOrEmpty(ClassName))
-                button.AddToClassList(ClassName);
+            SetClassNamesOnVisualElement(button);
             button.style.opacity = Opacity;
             button.text = Label;
             EventHelper.Bind(button, OnClick);

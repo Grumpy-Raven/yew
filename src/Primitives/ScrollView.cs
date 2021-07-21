@@ -10,7 +10,7 @@ namespace YewLib
             
         }
         
-        public ScrollView(string className) : base(className)
+        public ScrollView(string classNames) : base(classNames)
         {
             
         }
@@ -18,8 +18,7 @@ namespace YewLib
         public override VisualElement ToVisualElement()
         {
             var scroller = new UIScrollView();
-            if (ClassName != null)
-                scroller.AddToClassList(ClassName);
+            SetClassNamesOnVisualElement(scroller);
             return scroller;
         }
     }
