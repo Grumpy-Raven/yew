@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace YewLib.Forms
 {
@@ -12,6 +13,8 @@ namespace YewLib.Forms
 
         public string DropdownClassName { get; set; } = "dd";
         public string DropdownItemsClassName { get; set; } = "dd-items";
+        public string DropdownEntryClassName { get; set; } = "dd-entry";
+        public string DropdownSelectedClassName { get; set; } = "dd-selected";
         
         public Action<List<string>> OnChanged { get; set; }
         
@@ -37,6 +40,27 @@ namespace YewLib.Forms
                 return new StackLayout(className: view.DropdownClassName)
                 {
                     label,
+                    new StackLayout(className: view.DropdownItemsClassName)
+                    {
+                        view.AvailableValues.Select(v =>
+                        {
+                            var l = new Label(v, view.DropdownEntryClassName);
+                            if (view.SelectedValues.Contains(v))
+                                l.ClassName += " " + view.DropdownSelectedClassName;
+                            l.OnClick = () =>
+                            {
+                                if (view.SelectedValues.Contains(v))
+                                {
+                                    view.SelectedValues.Remove(v);
+                                }
+                                else
+                                {
+                                    view.SelectedValues.Add(v);
+                                }
+                            };
+                            return l;
+                        })
+                    }
                 };
             }
         }
