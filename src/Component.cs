@@ -21,6 +21,8 @@ namespace YewLib
             ClassName = className;
         }
         
+        public View Props { get; set; }
+        
         public virtual void ReceiveProps(View view)
         {
         }

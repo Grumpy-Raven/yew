@@ -36,9 +36,11 @@ namespace YewLib
             {
                 instance = Activator.CreateInstance(componentType) as Component;
             }
+
             if (instance != null)
             {
                 instance.Node = node;
+                instance.Props = this;
                 return instance;
             }
             Debug.LogError("error creating component from view");

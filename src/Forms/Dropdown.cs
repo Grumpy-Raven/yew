@@ -39,7 +39,10 @@ namespace YewLib.Forms
 
                 return new StackLayout(className: view.DropdownClassName)
                 {
-                    label,
+                    new Label(label)
+                    {
+                        OnClick = () => open.Value = !open.Value
+                    },
                     new StackLayout(className: view.DropdownItemsClassName)
                     {
                         view.AvailableValues.Select(v =>
@@ -49,13 +52,18 @@ namespace YewLib.Forms
                                 l.ClassName += " " + view.DropdownSelectedClassName;
                             l.OnClick = () =>
                             {
+                                if (!view.Multiselect)
+                                {
+                                    view.OnChanged(new List<string>() {v});
+                                    return;
+                                }
                                 if (view.SelectedValues.Contains(v))
                                 {
-                                    view.SelectedValues.Remove(v);
+                                    view.OnChanged(view.SelectedValues.Except(new [] {v}).ToList());
                                 }
                                 else
                                 {
-                                    view.SelectedValues.Add(v);
+                                    view.OnChanged(view.SelectedValues.Concat(new [] {v}).ToList());
                                 }
                             };
                             return l;

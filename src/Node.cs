@@ -68,7 +68,10 @@ namespace YewLib
                    Component = view.ToComponent(this);
                 }
                 else
+                {
+                    Component.Props = view;
                     Component.ReceiveProps(view);
+                }
                 Component.PrepareRender();
                 view = new StackLayout
                 {
