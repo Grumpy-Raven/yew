@@ -6,11 +6,6 @@ using UnityEngine;
 
 namespace YewLib
 {
-    public interface IUpdatable
-    {
-        void Update();
-    }
-    
     public class Component : IUpdatable
     {
         public string ClassName { get; set; }
@@ -46,23 +41,23 @@ namespace YewLib
         
         public State<T> UseAtom<T>(string key, Func<T> initialValue)
         {
-            var state = Yew.UseAtom(key, initialValue);
-            state.Subscribers.Add(this);
+            var state = Atom<T>.Use(key, initialValue);
+            state.Subscribers.Add(Update);
             return state;
         }
         
         public State<T> UseAtom<T>(string key, T initialValue = default)
         {
-            var state = Yew.UseAtom(key, () => initialValue);
-            state.Subscribers.Add(this);
+            var state = Atom<T>.Use(key, () => initialValue);
+            state.Subscribers.Add(Update);
             return state;
         }
         
         public T UseAtomValue<T>(string key)
         {
-            var state = Yew.UseAtom<T>(key);
+            var state = Atom<T>.Use(key);
             if (state == null) return default(T);
-            state.Subscribers.Add(this);
+            state.Subscribers.Add(Update);
             return state.Value;
         }
         
@@ -90,7 +85,7 @@ namespace YewLib
             else
             {
                 state = new State<T>() {Value = initialValue()};
-                state.Subscribers.Add(this);
+                state.Subscribers.Add(Update);
                 states[key].Add(state);
             }
             stateCounters[key]++;
@@ -114,7 +109,12 @@ namespace YewLib
             else
                 Node.Update();
         }
-        
+
+        public void Update<T>(T value)
+        {
+            Update();
+        }
+
         public static Button Button(string label, Action onClick, string className = null)
         {
             return new Button(label, onClick, className);

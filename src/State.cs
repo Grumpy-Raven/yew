@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace YewLib
 {
     public interface IState
     {
-        HashSet<IUpdatable> Subscribers { get; set; }
     }
     
     public class State<T> : IState
@@ -26,10 +26,10 @@ namespace YewLib
 
         public void Update()
         {
-            foreach (var s in Subscribers) s.Update();
+            foreach (var s in Subscribers) s(Value);
         }
 
-        public HashSet<IUpdatable> Subscribers { get; set; } = new HashSet<IUpdatable>();
+        public HashSet<Action<T>> Subscribers { get; set; } = new();
 
         public static implicit operator T(State<T> obj) => obj.Value;
     }

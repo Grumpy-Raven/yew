@@ -24,6 +24,8 @@ namespace YewLib
 
         public void AddClassName(string className)
         {
+            if (string.IsNullOrEmpty(className))
+                return;
             ClassNames.Add(className);
         }
 
