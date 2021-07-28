@@ -18,7 +18,7 @@ namespace YewLib
         public int IdGen { get; set; }
     }
 
-    public class TodoApp : View
+    public record TodoApp : View
     {
         public static string TodoAppKey = "toyew";
         

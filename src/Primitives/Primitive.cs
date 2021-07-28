@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 namespace YewLib
 {
-    public class Primitive : View
+    public record Primitive : View
     {
         public Primitive()
         {

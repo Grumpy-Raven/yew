@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace YewLib
 {
-    public class HelloWorld : View
+    public record HelloWorld : View
     {
         public int Num { get; set; } = 1;
 

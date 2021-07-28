@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace YewLib
 {
-    public class View : IEquatable<View>
+    public record View
     {
         public View(string className)
         {
@@ -86,35 +87,15 @@ namespace YewLib
 
         public virtual bool NeedsUpdate(View newView) => false;
 
-        public virtual bool Equals(View other)
+        public static Func<View, View, bool> ViewEquality => (a, b) =>
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            if (other.GetType() != GetType()) return false;
-            return Key == other.Key;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((View) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return (Key != null ? Key.GetHashCode() : 0);
-        }
-
-        public static bool operator ==(View left, View right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(View left, View right)
-        {
-            return !Equals(left, right);
-        }
+            if (ReferenceEquals(null, b) || ReferenceEquals(null, a))
+                return false;
+            if (ReferenceEquals(a, b))
+                return true;
+            if (a.GetType() != b.GetType())
+                return false;
+            return a.Key == b.Key;
+        };
     }
 }

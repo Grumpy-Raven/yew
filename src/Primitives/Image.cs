@@ -4,7 +4,7 @@ using UIImage = UnityEngine.UIElements.Image;
 
 namespace YewLib
 {
-    public class Image : Primitive
+    public record Image : Primitive
     {
         public string Src { get; set; }
         public int? Width { get; set; }

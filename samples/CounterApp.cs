@@ -2,7 +2,7 @@
 
 namespace YewLib
 {
-    public class CounterApp : View
+    public record CounterApp : View
     {
         public class Component : YewLib.Component
         {

@@ -6,7 +6,7 @@ using YewLib.Util;
 namespace YewLib
 {
     
-    public class Label : Primitive
+    public record Label : Primitive
     {
         public string Text { get; set; }
         public Color? Color { get; set; }

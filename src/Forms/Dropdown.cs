@@ -4,12 +4,12 @@ using System.Linq;
 
 namespace YewLib.Forms
 {
-    public class Dropdown : View
+    public record Dropdown : View
     {
         public string Label { get; set; }
         public bool Multiselect { get; set; }
-        public List<string> AvailableValues { get; set; }
-        public List<string> SelectedValues { get; set; }
+        public string[] AvailableValues { get; set; }
+        public string[] SelectedValues { get; set; }
 
         public string DropdownClassName { get; set; } = "dd";
         public string DropdownItemsClassName { get; set; } = "dd-items";
@@ -45,7 +45,7 @@ namespace YewLib.Forms
                     },
                     new StackLayout(className: view.DropdownItemsClassName)
                     {
-                        view.AvailableValues.Select(v =>
+                        open.Value ? view.AvailableValues.Select(v =>
                         {
                             var l = new Label(v, view.DropdownEntryClassName);
                             if (view.SelectedValues.Contains(v))
@@ -69,7 +69,7 @@ namespace YewLib.Forms
                                 }
                             };
                             return l;
-                        })
+                        }) : null
                     }
                 };
             }

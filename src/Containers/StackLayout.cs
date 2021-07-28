@@ -1,16 +1,16 @@
-﻿using UnityEngine.UIElements;
+using UnityEngine.UIElements;
 
 namespace YewLib
 {
-    public record Elem : ContainerView
+    public record StackLayout : ContainerView
     {
-        public Elem(string key = null, string className = null, string style = null)
+        public StackLayout(string key = null, string className = null, string style = null)
         {
             Key = key;
             AddClassName(className);
             StyleSrc = style;
         }
-        
+
         public override VisualElement ToVisualElement()
         {
             var ve = new VisualElement();

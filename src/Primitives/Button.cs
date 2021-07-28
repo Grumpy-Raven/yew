@@ -4,7 +4,7 @@ using YewLib.Util;
 
 namespace YewLib
 {
-    public class Button : Primitive
+    public record Button : Primitive
     {
         public string Label { get; set; }
         public Action OnClick { get; set; }

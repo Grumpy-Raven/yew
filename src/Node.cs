@@ -97,7 +97,7 @@ namespace YewLib
                 {
                     for (int i = 0; i < Children.Count; i++)
                     {
-                        if (!Equals(Children[i].View, containerView.Children[i]))
+                        if (!View.ViewEquality(Children[i].View, containerView.Children[i]))
                         {
                             needToReconcile = true;
                             break;
@@ -125,7 +125,10 @@ namespace YewLib
                     return;
                 }
 
-                var lcs = new LCS();
+                var lcs = new LCS<View>()
+                {
+                    EqualityTest = View.ViewEquality
+                };
                 var srcPos = 0;
                 var dstPos = 0;
                 foreach (var action in
@@ -135,24 +138,24 @@ namespace YewLib
                     View newView;
                     switch (action)
                     {
-                        case LCS.Op.Keep:
+                        case LcsOp.Keep:
                             oldNode = Children[srcPos++];
                             newView = containerView.Children[dstPos++];
                             if (oldNode.View.NeedsUpdate(newView))
                             {
                                 oldNode.Update(newView);
-                                // Debug.Log(Indent + "updating " + newView.Key);
+                                Debug.Log(Indent + "updating " + newView.Key);
                             }
                             break;
-                        case LCS.Op.Delete:
-                            // Debug.Log("removing old elem at " + srcPos);
+                        case LcsOp.Delete:
+                            Debug.Log("removing old elem at " + srcPos);
                             oldNode = Children[srcPos];
                             Children.RemoveAt(srcPos);
                             oldNode.VisualElement.parent.Remove(oldNode.VisualElement);
                             break;
-                        case LCS.Op.Insert:
+                        case LcsOp.Insert:
                             newView = containerView.Children[dstPos++];
-                            // Debug.Log(Indent + "inserting " + newView.Key);
+                            Debug.Log(Indent + "inserting " + newView.Key);
                             var newNode = PrepareNode(this, newView, srcPos);
                             Children.Insert(srcPos++, newNode);
                             break;

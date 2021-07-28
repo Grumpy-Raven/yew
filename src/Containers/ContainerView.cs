@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 namespace YewLib
 {
-    public abstract class ContainerView : Primitive, IEnumerable<View>
+    public abstract record ContainerView : Primitive, IEnumerable<View>
     {
         public ContainerView()
         {
@@ -65,7 +65,7 @@ namespace YewLib
             var other = newView as ContainerView;
             if (other.Children.Count != Children.Count) return true;
             for(int i = 0; i < Children.Count; i++)
-                if (!Equals(other.Children[i], Children[i]) ||
+                if (!ViewEquality(other.Children[i], Children[i]) ||
                     Children[i].NeedsUpdate(other.Children[i]))
                     return true;
             return false;
@@ -74,23 +74,6 @@ namespace YewLib
         public override void UpdateVisualElement(VisualElement ve)
         {
             // no need to throw an exception for these...
-        }
-    }
-
-    public class StackLayout : ContainerView
-    {
-        public StackLayout(string key = null, string className = null, string style = null)
-        {
-            Key = key;
-            AddClassName(className);
-            StyleSrc = style;
-        }
-
-        public override VisualElement ToVisualElement()
-        {
-            var ve = new VisualElement();
-            SetClassNamesOnVisualElement(ve);
-            return ve;
         }
     }
 }

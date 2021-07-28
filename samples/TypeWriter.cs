@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace YewLib
 {
-    public class TypeWriter : View
+    public record TypeWriter : View
     {
         public string Text { get; set; }
 

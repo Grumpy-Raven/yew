@@ -6,7 +6,7 @@ using YewLib.Util;
 
 namespace YewLib
 {
-    public class Checkbox : Primitive
+    public record Checkbox : Primitive
     {
         public string Label { get; set; }
         public bool Value { get; set; }

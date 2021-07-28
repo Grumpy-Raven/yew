@@ -2,7 +2,7 @@
 
 namespace YewLib
 {
-    public class Flex : ContainerView
+    public record Flex : ContainerView
     {
         public FlexDirection FlexDirection { get; set; }
         public Align AlignItems { get; set; }

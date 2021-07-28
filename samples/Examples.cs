@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace YewLib
 {
-    public class Examples : View
+    public record Examples : View
     {
         public enum Choice
         {

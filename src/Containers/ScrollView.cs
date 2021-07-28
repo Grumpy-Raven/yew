@@ -3,7 +3,7 @@ using UIScrollView = UnityEngine.UIElements.ScrollView;
 
 namespace YewLib
 {
-    public class ScrollView : ContainerView
+    public record ScrollView : ContainerView
     {
         public ScrollView()
         {

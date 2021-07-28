@@ -4,7 +4,7 @@ using YewLib.Util;
 
 namespace YewLib
 {
-    public class TextField : Primitive
+    public record TextField : Primitive
     {
         public string Label { get; set; }
         public string Value { get; set; }

@@ -40,7 +40,7 @@ namespace YewLib
         {
             if (!atoms.ContainsKey(key))
             {
-                if (unassignedActions.TryGetValue(key, out var actions))
+                if (!unassignedActions.TryGetValue(key, out var actions))
                 {
                     actions = new List<Action<T>>();
                     unassignedActions[key] = actions;
