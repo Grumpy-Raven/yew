@@ -80,12 +80,12 @@ namespace YewLib
             }
             MaybeReconcileChildren(view);
             if(Runtime.HasInstance)
-                Runtime.Instance.HasBeenUpdatedThisFrame(this);
+                Runtime.Instance.MarkUpdated(this);
         }
 
         private void MaybeReconcileChildren(View view)
         {
-            if (view is ContainerView containerView && containerView.Children.Any())
+            if (view is ContainerView containerView)
             {
                 if (Children == null)
                     Children = new List<Node>();
