@@ -49,6 +49,7 @@ namespace YewLib
 
         public void SetClassNamesOnVisualElement(VisualElement ve)
         {
+            ve.ClearClassList();
             foreach(var className in ClassNames)
                 ve.AddToClassList(className);
         }
@@ -85,7 +86,7 @@ namespace YewLib
             return new Label(from);
         }
 
-        public virtual bool NeedsUpdate(View newView) => false;
+        public virtual bool NeedsUpdate(View newView) => !(this == newView);
 
         public static Func<View, View, bool> ViewEquality => (a, b) =>
         {

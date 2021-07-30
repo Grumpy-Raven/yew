@@ -21,8 +21,10 @@ namespace YewLib
 
         public override bool NeedsUpdate(View newView)
         {
-            var newLabel = newView as Label;
-            return Text != newLabel.Text || Color != newLabel.Color;
+            if (newView is Label newLabel)
+                return Text != newLabel.Text || Color != newLabel.Color ||
+                   !(ClassNames?.SetEquals(newView.ClassNames) ?? false);
+            return true;
         }
 
         public Label(string text)
@@ -52,6 +54,7 @@ namespace YewLib
             {
                 label.style.color = new StyleColor(Color.Value);
             }
+            SetClassNamesOnVisualElement(label);
             EventHelper<MouseUpEvent>.Unbind(label);
             if (OnClick != null)
                 EventHelper<MouseUpEvent>.Bind(label, e => OnClick());
