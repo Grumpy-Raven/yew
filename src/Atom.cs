@@ -3,14 +3,18 @@ using System.Collections.Generic;
 
 namespace YewLib
 {
+    public class Key<T>
+    {
+    }
+
     public static class Atom<T>
     {
-        public static State<T> Use(string key, T initialValue)
+        public static State<T> Use(Key<T> key, T initialValue)
         {
             return Use(key, () => initialValue);
         }
         
-        public static State<T> Use(string key, Func<T> initialValue)
+        public static State<T> Use(Key<T> key, Func<T> initialValue)
         {
             if (!atoms.ContainsKey(key))
             {
@@ -29,14 +33,14 @@ namespace YewLib
             return atoms[key] as State<T>;
         }
         
-        public static State<T> Use(string key)
+        public static State<T> Use(Key<T> key)
         {
             return atoms.ContainsKey(key) ? atoms[key] : null;
         }
-        private static Dictionary<string, State<T>> atoms = new();
+        private static Dictionary<Key<T>, State<T>> atoms = new();
 
-        private static Dictionary<string, List<Action<T>>> unassignedActions = new();
-        public static void Observe(string key, Action<T> action)
+        private static Dictionary<Key<T>, List<Action<T>>> unassignedActions = new();
+        public static void Observe(Key<T> key, Action<T> action)
         {
             if (!atoms.ContainsKey(key))
             {

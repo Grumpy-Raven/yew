@@ -39,21 +39,21 @@ namespace YewLib
             return UseState(callerName, () => initialValue);
         }
         
-        public State<T> UseAtom<T>(string key, Func<T> initialValue)
+        public State<T> UseAtom<T>(Key<T> key, Func<T> initialValue)
         {
             var state = Atom<T>.Use(key, initialValue);
             state.Subscribers.Add(Update);
             return state;
         }
         
-        public State<T> UseAtom<T>(string key, T initialValue = default)
+        public State<T> UseAtom<T>(Key<T> key, T initialValue = default)
         {
             var state = Atom<T>.Use(key, () => initialValue);
             state.Subscribers.Add(Update);
             return state;
         }
         
-        public T UseAtomValue<T>(string key)
+        public T UseAtomValue<T>(Key<T> key)
         {
             var state = Atom<T>.Use(key);
             if (state == null) return default(T);

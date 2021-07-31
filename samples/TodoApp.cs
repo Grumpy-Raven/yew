@@ -20,7 +20,10 @@ namespace YewLib
 
     public record TodoApp : View
     {
-        public static string TodoAppKey = "toyew";
+        public class Atoms
+        {
+            public static Key<TodoState> App = new();
+        }
         
         public class Component : YewLib.Component
         {
@@ -37,7 +40,7 @@ namespace YewLib
             
             public override View Render()
             {
-                var state = UseAtom(TodoAppKey, () => new TodoState());
+                var state = UseAtom(Atoms.App, () => new TodoState());
                 return new StackLayout()
                 {
                     new ScrollView
