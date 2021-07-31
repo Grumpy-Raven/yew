@@ -68,6 +68,10 @@ namespace YewLib
             }
             catch
             {
+                if (componentType.ContainsGenericParameters)
+                {
+                    componentType = componentType.MakeGenericType(type.GetGenericArguments());
+                }
                 instance = Activator.CreateInstance(componentType) as Component;
             }
 
