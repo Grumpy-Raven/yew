@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace YewLib.Forms
@@ -10,14 +9,12 @@ namespace YewLib.Forms
         public bool Multiselect { get; set; }
         public string[] AvailableValues { get; set; }
         public string[] SelectedValues { get; set; }
-
         public string DropdownClassName { get; set; } = "dd";
         public string DropdownItemsClassName { get; set; } = "dd-items";
         public string DropdownEntryClassName { get; set; } = "dd-entry";
         public string DropdownSelectedClassName { get; set; } = "dd-selected";
-        
-        public Action<List<string>> OnChanged { get; set; }
-        
+        public Action<string[]> OnChanged { get; set; }
+
         public class Component : YewLib.Component
         {
             private Dropdown view;
@@ -56,16 +53,16 @@ namespace YewLib.Forms
                             {
                                 if (!view.Multiselect)
                                 {
-                                    view.OnChanged(new List<string>() {v});
+                                    view.OnChanged(new [] {v});
                                     return;
                                 }
                                 if (view.SelectedValues.Contains(v))
                                 {
-                                    view.OnChanged(view.SelectedValues.Except(new [] {v}).ToList());
+                                    view.OnChanged(view.SelectedValues.Except(new [] {v}).ToArray());
                                 }
                                 else
                                 {
-                                    view.OnChanged(view.SelectedValues.Concat(new [] {v}).ToList());
+                                    view.OnChanged(view.SelectedValues.Concat(new [] {v}).ToArray());
                                 }
                             };
                             return l;
