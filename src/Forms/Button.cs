@@ -10,13 +10,15 @@ namespace YewLib
         public Action OnClick { get; set; }
         
         public float Opacity { get; set; }
+
+        public static string DefaultClassName = "unity-button";
         
         public Button(string label, Action onClick, string className = null, float opacity = 1)
         {
             Label = label;
             OnClick = onClick;
             Opacity = opacity;
-            AddClassName(className);
+            AddClassName(className ?? DefaultClassName);
         }
 
         public override bool NeedsUpdate(View newView)
