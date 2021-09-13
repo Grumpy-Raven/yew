@@ -18,7 +18,9 @@ namespace YewLib
             Label = label;
             OnClick = onClick;
             Opacity = opacity;
-            AddClassName(className ?? DefaultClassName);
+            AddClassName(DefaultClassName);
+            if (className != null)
+                AddClassName(className);
         }
 
         public override bool NeedsUpdate(View newView)

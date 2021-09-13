@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using FluffyUnderware.DevTools.Extensions;
 using UnityEngine;
 
 namespace YewLib
@@ -42,7 +41,7 @@ namespace YewLib
                 }
                 UseCoroutine(anim);
                 string text = Props.Text;
-                string colorPrefix = $"<color={color.Value.ToHtml()}>";
+                string colorPrefix = $"<color={ColorUtility.ToHtmlStringRGBA(color.Value)}>";
                 if (len < text.Length)
                     text = $"{text.Substring(0, len)}<alpha=#00>{text.Substring(len)}";
                 return new StackLayout()

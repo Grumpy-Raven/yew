@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace YewLib
 {
@@ -125,6 +126,12 @@ namespace YewLib
             return new Label(label, className);
         }
 
+        public static TextField TextField(string label, string value, Action<string> onChanged,
+            string className = "textfield", Align align = Align.Center)
+        {
+            return new (label, value, onChanged, className, align);
+        }
+        
         public void RequestAnimationFrame(Action raf)
         {
             if (Runtime.Instance == null)
